@@ -143,7 +143,14 @@
 
       targetData() {
         if (this.targetOrder === 'original') {
-          return this.data.filter(item => this.value.indexOf(item[this.props.key]) > -1);
+          // return this.data.filter(item => this.value.indexOf(item[this.props.key]) > -1);
+              //  改进代码，遍历选中值，查询原数组的对应项目，组成新数组，这样新数组的顺序就和选中的值保持一致了。
+          let tmp = [];
+          this.value.forEach(item => {
+          let i = this.data.findIndex(it => it[this.props.key] === item);
+          tmp.push(this.data[i]);
+          });
+          return tmp;
         } else {
           return this.value.reduce((arr, cur) => {
             const val = this.dataObj[cur];
