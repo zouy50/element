@@ -51,8 +51,8 @@
       <el-button
         type="primary"
         :class="['el-transfer__button', hasButtonTexts ? 'is-with-texts' : '']"
-        @click.native="addToRight"
-        :disabled="leftChecked.length !== 1">
+        @click.native="move_down"
+        :disabled="rightChecked.length !== 1">
         <span v-if="buttonTexts[1] !== undefined">{{ buttonTexts[1] }}</span>
         <i class="el-icon-arrow-down"></i>
       </el-button>
@@ -231,7 +231,19 @@
           let temp_now_value = move_down_value[now_index];
           move_down_value[now_index] = move_down_value[now_index - 1];
           move_down_value[now_index - 1] = temp_now_value;
-          this.value = move_down_value;
+          this.$emit('update_value', move_down_value);
+        };
+        // console.log(this.rightChecked);
+      },
+
+      move_down() {
+        let move_down_value = this.value.slice();
+        let now_index = move_down_value.indexOf(this.rightChecked[0]);
+        if (now_index !== (move_down_value.length - 1)) {
+          let temp_now_value = move_down_value[now_index];
+          move_down_value[now_index] = move_down_value[now_index + 1];
+          move_down_value[now_index + 1] = temp_now_value;
+          this.$emit('update_value', move_down_value);
         };
         // console.log(this.rightChecked);
       },
